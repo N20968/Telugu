@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teluginti Ruchulu — Authentic Andhra Restaurant</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+Telugu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --saffron: #E8802A;
+  --gold: #C9A84C;
+  --deep: #1C0A00;
+  --bark: #3B1C08;
+  --spice: #8B2500;
+  --cream: #FDF6EC;
+  --sand: #F5E8D0;
+  --muted: #9A7B5A;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-telugu: 'Noto Sans Telugu', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--deep);
+  overflow-x: hidden;
+}
+
+/* ─── SCROLL ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(232,128,42,0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(232,128,42,0); }
+  100% { box-shadow: 0 0 0 0 rgba(232,128,42,0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── CURSOR ─── */
+.custom-cursor {
+  width: 12px; height: 12px;
+  background: var(--saffron);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, width 0.2s, height 0.2s;
+  mix-blend-mode: multiply;
+}
+
+/* ─── NAVBAR ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 60px;
+  height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(28,10,0,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  animation: fadeIn 0.6s ease forwards;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 14px;
+  text-decoration: none;
+}
+.nav-emblem {
+  width: 42px; height: 42px;
+  background: linear-gradient(135deg, var(--saffron), var(--gold));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  animation: pulse-ring 2.5s infinite;
+}
+.nav-name {
+  display: flex; flex-direction: column;
+}
+.nav-name-en {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+.nav-name-tel {
+  font-family: var(--font-telugu);
+  font-size: 11px;
+  color: var(--gold);
+  line-height: 1.4;
+}
+.nav-links {
+  display: flex; gap: 36px; list-style: none;
+}
+.nav-links a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-order {
+  background: linear-gradient(135deg, var(--saffron), #c06018);
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.nav-order:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(232,128,42,0.4);
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  background: var(--deep);
+  position: relative;
+  display: flex; align-items: center;
+  overflow: hidden;
+  padding-top: 72px;
+}
+.hero-bg-texture {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(139,37,0,0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(232,128,42,0.15) 0%, transparent 50%);
+}
+.hero-grid-pattern {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-mandala {
+  position: absolute; right: -100px; top: 50%; transform: translateY(-50%);
+  width: 700px; height: 700px;
+  border: 1px solid rgba(201,168,76,0.08);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-mandala::before {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  border: 1px solid rgba(201,168,76,0.06);
+  border-radius: 50%;
+}
+.hero-mandala::after {
+  content: '';
+  position: absolute;
+  width: 300px; height: 300px;
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 50%;
+  animation: spin-slow 40s linear infinite;
+}
+.hero-mandala-inner {
+  font-size: 160px;
+  opacity: 0.07;
+  animation: float 6s ease-in-out infinite;
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 0 60px;
+  max-width: 700px;
+  animation: fadeUp 1s ease 0.2s both;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid rgba(201,168,76,0.4);
+  padding: 6px 16px;
+  border-radius: 2px;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+}
+.hero-tag-dot {
+  width: 5px; height: 5px;
+  background: var(--saffron);
+  border-radius: 50%;
+}
+.hero-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 7vw, 88px);
+  color: #fff;
+  line-height: 1.0;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.hero-h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--saffron) 0%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-tel {
+  font-family: var(--font-telugu);
+  font-size: 28px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 28px;
+  display: block;
+}
+.hero-desc {
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.8;
+  max-width: 480px;
+  margin-bottom: 44px;
+}
+.hero-actions {
+  display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+  margin-bottom: 56px;
+}
+.btn-hero-primary {
+  background: var(--saffron);
+  color: #fff;
+  padding: 16px 36px;
+  border-radius: 3px;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-hero-primary:hover {
+  background: #d06520;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(232,128,42,0.35);
+}
+.btn-hero-ghost {
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.8);
+  padding: 16px 36px;
+  border-radius: 3px;
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-hero-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.hero-stats {
+  display: flex; gap: 48px;
+}
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 36px; font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.hero-stat-divider {
+  width: 1px;
+  background: rgba(255,255,255,0.1);
+  align-self: stretch;
+}
+
+/* ─── MARQUEE STRIP ─── */
+.marquee-strip {
+  background: var(--saffron);
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-track {
+  display: inline-flex;
+  animation: marquee 20s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-item {
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-right: 60px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+}
+.marquee-dot {
+  width: 4px; height: 4px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+}
+
+/* ─── SECTIONS COMMON ─── */
+.section {
+  padding: 100px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-label {
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--saffron);
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 30px; height: 1px;
+  background: var(--saffron);
+}
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 54px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--deep);
+}
+.section-heading em {
+  font-style: italic;
+  color: var(--saffron);
+}
+
+/* ─── STORY ─── */
+.story-wrapper {
+  background: var(--cream);
+  padding: 100px 0;
+}
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+.story-visual {
+  position: relative;
+}
+.story-img-card {
+  background: linear-gradient(145deg, var(--bark) 0%, #5C2E0A 100%);
+  border-radius: 8px;
+  height: 460px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.story-img-pattern {
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(201,168,76,0.05) 0px,
+    rgba(201,168,76,0.05) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+.story-img-icon { font-size: 100px; position: relative; z-index: 1; }
+.story-badge {
+  position: absolute;
+  bottom: -20px; right: -20px;
+  background: var(--saffron);
+  color: #fff;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  animation: spin-slow 20s linear infinite;
+  box-shadow: 0 8px 32px rgba(232,128,42,0.4);
+}
+.story-badge-inner { animation: spin-slow 20s linear infinite reverse; text-align: center; }
+.story-badge-num { font-size: 28px; font-weight: 700; line-height: 1; }
+.story-badge-text { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+.story-body p {
+  font-size: 15px;
+  color: #5A3A1A;
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+.story-features {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; margin-top: 36px;
+}
+.story-feat {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid rgba(201,168,76,0.2);
+}
+.story-feat-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.story-feat-title {
+  font-size: 13px; font-weight: 600;
+  color: var(--deep);
+  margin-bottom: 2px;
+}
+.story-feat-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ─── MENU ─── */
+.menu-wrapper {
+  background: var(--deep);
+  padding: 100px 0;
+}
+.menu-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+.menu-wrapper .section-heading { color: #fff; }
+.menu-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 56px;
+  flex-wrap: wrap; gap: 20px;
+}
+.menu-tabs {
+  display: flex; gap: 4px;
+  background: rgba(255,255,255,0.05);
+  padding: 4px;
+  border-radius: 4px;
+}
+.menu-tab {
+  padding: 8px 20px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+}
+.menu-tab.active {
+  background: var(--saffron);
+  color: #fff;
+}
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.menu-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,168,76,0.08);
+  padding: 32px 28px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.menu-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(232,128,42,0.08), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.menu-item:hover::before { opacity: 1; }
+.menu-item:hover { border-color: rgba(232,128,42,0.3); transform: scale(1.01); }
+.menu-item-emoji { font-size: 36px; margin-bottom: 16px; display: block; }
+.menu-item-name {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.menu-item-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.menu-item-footer {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.menu-item-price {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700;
+  color: var(--gold);
+}
+.menu-item-tag {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+.tag-veg { background: rgba(34,139,34,0.15); color: #5cb85c; }
+.tag-spicy { background: rgba(139,37,0,0.2); color: #e05a30; }
+.tag-popular { background: rgba(201,168,76,0.15); color: var(--gold); }
+
+/* ─── SERVICES ─── */
+.services-wrapper {
+  background: var(--sand);
+  padding: 100px 0;
+}
+.services-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 60px;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 56px;
+  border: 1px solid rgba(201,168,76,0.2);
+}
+.service-item {
+  padding: 44px 32px;
+  border-right: 1px solid rgba(201,168,76,0.2);
+  transition: background 0.3s;
+  position: relative;
+}
+.service-item:last-child { border-right: none; }
+.service-item:hover { background: #fff; }
+.service-item-num {
+  font-family: var(--font-display);
+  font-size: 48px; font-weight: 700;
+  color: rgba(201,168,76,0.15);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.service-item-icon { font-size: 32px; margin-bottom: 16px; }
+.service-item-title {
+  font-size: 16px; font-weight: 700;
+  color: var(--deep);
+  margin-bottom: 10px;
+}
+.service-item-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.service-line {
+  position: absolute;
+  bottom: 0; left: 32px;
+  width: 0; height: 3px;
+  background: var(--saffron);
+  transition: width 0.3s;
+}
+.service-item:hover .service-line { width: calc(100% - 64px); }
+
+/* ─── INFO ─── */
+.info-wrapper {
+  background: var(--cream);
+  padding: 100px 0;
+}
+.info-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 60px;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 40px;
+  margin-top: 56px;
+}
+.info-card {
+  padding: 40px 36px;
+  border-radius: 6px;
+}
+.info-card-dark {
+  background: var(--deep);
+  color: #fff;
+}
+.info-card-light {
+  background: #fff;
+  border: 1px solid rgba(201,168,76,0.2);
+}
+.info-card-accent {
+  background: var(--saffron);
+  color: #fff;
+}
+.info-card-icon { font-size: 32px; margin-bottom: 20px; }
+.info-card-label {
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+.info-card-dark .info-card-label { color: var(--gold); }
+.info-card-light .info-card-label { color: var(--saffron); }
+.info-card-accent .info-card-label { color: rgba(255,255,255,0.7); }
+.info-main {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.info-card-dark .info-main { color: #fff; }
+.info-card-light .info-main { color: var(--deep); }
+.info-card-accent .info-main { color: #fff; }
+.info-sub {
+  font-size: 13px; line-height: 1.7;
+}
+.info-card-dark .info-sub { color: rgba(255,255,255,0.5); }
+.info-card-light .info-sub { color: var(--muted); }
+.info-card-accent .info-sub { color: rgba(255,255,255,0.75); }
+.info-phone-link {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700;
+  color: var(--gold);
+  text-decoration: none;
+  margin-bottom: 6px;
+  transition: color 0.2s;
+}
+.info-phone-link:hover { color: var(--saffron); }
+
+/* ─── REVIEWS ─── */
+.reviews-wrapper {
+  background: var(--bark);
+  padding: 100px 0;
+}
+.reviews-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 60px;
+}
+.reviews-wrapper .section-label { color: var(--gold); }
+.reviews-wrapper .section-label::before { background: var(--gold); }
+.reviews-wrapper .section-heading { color: #fff; }
+.rating-overview {
+  display: flex; align-items: center; gap: 40px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 6px;
+  padding: 36px 40px;
+  margin: 48px 0;
+}
+.rating-big {
+  font-family: var(--font-display);
+  font-size: 80px; font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.rating-stars { font-size: 22px; margin-bottom: 4px; }
+.rating-count { color: rgba(255,255,255,0.4); font-size: 13px; }
+.rating-bars { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.rating-bar { display: flex; align-items: center; gap: 12px; }
+.rating-bar-label { color: rgba(255,255,255,0.4); font-size: 12px; width: 30px; }
+.rating-bar-track {
+  flex: 1; height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.rating-bar-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+}
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.review-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 6px;
+  padding: 28px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.review-card:hover {
+  border-color: rgba(201,168,76,0.3);
+  transform: translateY(-3px);
+}
+.review-stars { color: var(--gold); font-size: 14px; margin-bottom: 14px; }
+.review-text {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.review-author { display: flex; align-items: center; gap: 10px; }
+.review-avatar {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--saffron), var(--bark));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #fff;
+  flex-shrink: 0;
+}
+.review-name { font-size: 14px; font-weight: 600; color: #fff; }
+.review-date { font-size: 11px; color: rgba(255,255,255,0.3); }
+
+/* ─── CTA ─── */
+.cta-wrapper {
+  position: relative;
+  background: var(--deep);
+  padding: 100px 60px;
+  text-align: center;
+  overflow: hidden;
+}
+.cta-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(232,128,42,0.12) 0%, transparent 70%);
+}
+.cta-content { position: relative; z-index: 2; }
+.cta-heading {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.cta-heading em { font-style: italic; color: var(--saffron); }
+.cta-sub {
+  font-size: 16px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 40px;
+}
+.cta-buttons {
+  display: flex; gap: 16px;
+  justify-content: center; flex-wrap: wrap;
+}
+.btn-cta-primary {
+  background: var(--saffron);
+  color: #fff;
+  padding: 18px 44px;
+  border-radius: 3px;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-cta-primary:hover {
+  background: #d06520;
+  box-shadow: 0 12px 40px rgba(232,128,42,0.4);
+  transform: translateY(-2px);
+}
+.btn-cta-outline {
+  border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold);
+  padding: 18px 44px;
+  border-radius: 3px;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-cta-outline:hover {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.1);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: #0D0500;
+  padding: 64px 60px 28px;
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  max-width: 1200px; margin: 0 auto;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.footer-brand-name {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.footer-brand-tel {
+  font-family: var(--font-telugu);
+  font-size: 14px;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.footer-brand-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.footer-contact a {
+  display: block;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 14px; font-weight: 600;
+  margin-bottom: 6px;
+}
+.footer-col-title {
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 20px; font-weight: 600;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-bottom {
+  max-width: 1200px; margin: 0 auto;
+  padding-top: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-copy {
+  font-size: 12px;
+  color: rgba(255,255,255,0.2);
+}
+.footer-made {
+  font-size: 12px;
+  color: rgba(255,255,255,0.2);
+}
+.footer-made span { color: var(--saffron); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hero-content { padding: 0 24px; }
+  .section { padding: 60px 24px; }
+  .story-grid { grid-template-columns: 1fr; gap: 40px; }
+  .menu-grid { grid-template-columns: 1fr 1fr; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .info-grid { grid-template-columns: 1fr; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .hero-stats { gap: 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="custom-cursor" id="cursor"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-brand">
+    <div class="nav-emblem">🍃</div>
+    <div class="nav-name">
+      <span class="nav-name-en">Teluginti Ruchulu</span>
+      <span class="nav-name-tel">తెలుగింటి రుచులు</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#visit">Visit</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+  </ul>
+  <a href="tel:8374670325" class="nav-order">☎ Order Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-texture"></div>
+  <div class="hero-grid-pattern"></div>
+  <div class="hero-mandala">
+    <div class="hero-mandala-inner">🍛</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="hero-tag-dot"></span>
+      Authentic Andhra Cuisine · Est. KPHB Colony
+      <span class="hero-tag-dot"></span>
+    </div>
+    <h1 class="hero-h1">Teluginti<br><em>Ruchulu</em></h1>
+    <span class="hero-tel">తెలుగింటి రుచులు</span>
+    <p class="hero-desc">Veg & Non-Veg meals, biryanis, and pulao varieties crafted with authentic Andhra spices and home-kitchen soul — right here in Kukatpally.</p>
+    <div class="hero-actions">
+      <a href="https://swiggy.com" class="btn-hero-primary">Order on Swiggy →</a>
+      <a href="#menu" class="btn-hero-ghost">View Menu</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">4.6★</div>
+        <div class="hero-stat-label">Google Rating</div>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div>
+        <div class="hero-stat-num">4,453</div>
+        <div class="hero-stat-label">Reviews</div>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div>
+        <div class="hero-stat-num">₹200</div>
+        <div class="hero-stat-label">Max per Person</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item">🍚 Andhra Biryani <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🥘 Full Meals <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🍗 Chicken Curry <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🌾 Pulao Varieties <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🎊 Catering Available <span class="marquee-dot"></span></span>
+    <span class="marquee-item">📦 Takeaway <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🚚 Home Delivery <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🌶 Curry Point <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🍚 Andhra Biryani <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🥘 Full Meals <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🍗 Chicken Curry <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🌾 Pulao Varieties <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🎊 Catering Available <span class="marquee-dot"></span></span>
+    <span class="marquee-item">📦 Takeaway <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🚚 Home Delivery <span class="marquee-dot"></span></span>
+    <span class="marquee-item">🌶 Curry Point <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- STORY -->
+<div class="story-wrapper" id="story">
+  <div class="story-grid reveal">
+    <div class="story-visual">
+      <div class="story-img-card">
+        <div class="story-img-pattern"></div>
+        <div class="story-img-icon">🍛</div>
+      </div>
+      <div class="story-badge">
+        <div class="story-badge-inner">
+          <div class="story-badge-num">4.6</div>
+          <div class="story-badge-text">Rated</div>
+        </div>
+      </div>
+    </div>
+    <div class="story-body">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-heading" style="margin-bottom: 24px;">The Taste of<br><em>Telugu Home</em></h2>
+      <p>Welcome to Teluginti Ruchulu — where every plate tells the story of Andhra Pradesh's rich culinary heritage. Located in the heart of KPHB Colony, Kukatpally, we've been serving authentic Telugu meals that remind you of home.</p>
+      <p>From our spice-laden biryanis to our comforting full-meal thalis, every dish is prepared fresh daily using traditional recipes passed down through generations.</p>
+      <div class="story-features">
+        <div class="story-feat">
+          <div class="story-feat-icon">🌿</div>
+          <div>
+            <div class="story-feat-title">Fresh Daily</div>
+            <div class="story-feat-sub">Ingredients sourced every morning</div>
+          </div>
+        </div>
+        <div class="story-feat">
+          <div class="story-feat-icon">🏺</div>
+          <div>
+            <div class="story-feat-title">Traditional Recipes</div>
+            <div class="story-feat-sub">Authentic Andhra techniques</div>
+          </div>
+        </div>
+        <div class="story-feat">
+          <div class="story-feat-icon">✨</div>
+          <div>
+            <div class="story-feat-title">Hygienic Kitchen</div>
+            <div class="story-feat-sub">Clean & safe preparation</div>
+          </div>
+        </div>
+        <div class="story-feat">
+          <div class="story-feat-icon">💰</div>
+          <div>
+            <div class="story-feat-title">Affordable</div>
+            <div class="story-feat-sub">₹1 – ₹200 per person</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MENU -->
+<div class="menu-wrapper" id="menu">
+  <div class="menu-inner">
+    <div class="menu-header reveal">
+      <div>
+        <div class="section-label" style="color: var(--gold);">
+          <span style="display:block;width:30px;height:1px;background:var(--gold);"></span>
+          Our Specialties
+        </div>
+        <h2 class="section-heading">Signature <em>Dishes</em></h2>
+      </div>
+      <div class="menu-tabs">
+        <button class="menu-tab active" onclick="filterMenu('all', this)">All</button>
+        <button class="menu-tab" onclick="filterMenu('veg', this)">Veg</button>
+        <button class="menu-tab" onclick="filterMenu('nonveg', this)">Non-Veg</button>
+      </div>
+    </div>
+    <div class="menu-grid reveal" id="menu-grid">
+      <div class="menu-item" data-cat="nonveg">
+        <span class="menu-item-emoji">🍚</span>
+        <div class="menu-item-name">Andhra Biryani</div>
+        <div class="menu-item-desc">Aromatic long-grain rice slow-cooked with tender meat, whole spices, and fried onions in true Hyderabadi-Andhra style.</div>
+        <div class="menu-item-footer">
+          <span class="menu-item-price">from ₹120</span>
+          <span class="menu-item-tag tag-popular">Popular</span>
+        </div>
+      </div>
+      <div class="menu-item" data-cat="veg">
+        <span class="menu-item-emoji">🥘</span>
+        <div class="menu-item-name">Full Telugu Meals</div>
+        <div class="menu-item-desc">A complete thali with steamed rice, dal tadka, sambar, rasam, avakaya pickle, papad, and seasonal vegetables.</div>
+        <div class="menu-item-footer">
+          <span class="menu-item-price">from ₹80</span>
+          <span class="menu-item-tag tag-veg">Veg</span>
+        </div>
+      </div>
+      <div class="menu-item" data-cat="nonveg">
+        <span class="menu-item-emoji">🍗</span>
+        <div class="menu-item-name">Andhra Chicken Curry</div>
+        <div class="menu-item-desc">Fiery, home-style chicken curry with traditional spice blend, curry leaves, and fresh coconut — best with rice.</div>
+        <div class="menu-item-footer">
+          <span class="menu-item-price">from ₹100</span>
+          <span class="menu-item-tag tag-spicy">Spicy</span>
+        </div>
+      </div>
+      <div class="menu-item" data-cat="veg">
+        <span class="menu-item-emoji">🌾</span>
+        <div class="menu-item-name">Veg Pulao</div>
+        <div class="menu-item-desc">Fragrant basmati rice cooked with fresh seasonal vegetables, mint, and aromatic spices. Light yet satisfying.</div>
+        <div class="menu-item-footer">
+          <span class="menu-item-price">from ₹70</span>
+          <span class="menu-item-tag tag-veg">Veg</span>
+        </div>
+      </div>
+      <div class="menu-item" data-cat="nonveg">
+        <span class="menu-item-emoji">🐑</span>
+        <div class="menu-item-name">Mutton Pulao</div>
+        <div class="menu-item-desc">Slow-cooked mutton pieces with aged basmati and Andhra spice masala for a rich, deeply flavored plate.</div>
+        <div class="menu-item-footer">
+          <span class="menu-item-price">from ₹150</span>
+          <span class="menu-item-tag tag-popular">Popular</span>
+        </div>
+      </div>
+      <div class="menu-item" data-cat="veg">
+        <span class="menu-item-emoji">🍆</span>
+        <div class="menu-item-name">Gutti Vankaya</div>
+        <div class="menu-item-desc">Stuffed baby eggplant cooked in a rich peanut-sesame-tamarind gravy — a true Andhra signature dish.</div>
+        <div class="menu-item-footer">
+          <span class="menu-item-price">from ₹60</span>
+          <span class="menu-item-tag tag-veg">Veg</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="services-wrapper" id="services">
+  <div class="services-inner">
+    <div class="reveal">
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-heading">Our <em>Services</em></h2>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-item">
+        <div class="service-item-num">01</div>
+        <div class="service-item-icon">🍽</div>
+        <div class="service-item-title">Dining</div>
+        <div class="service-item-desc">Comfortable sit-down experience for families, friends, and colleagues with warm, attentive service.</div>
+        <div class="service-line"></div>
+      </div>
+      <div class="service-item">
+        <div class="service-item-num">02</div>
+        <div class="service-item-icon">🎊</div>
+        <div class="service-item-title">Catering</div>
+        <div class="service-item-desc">Professional catering for weddings, corporate lunches, birthday parties, and all major events.</div>
+        <div class="service-line"></div>
+      </div>
+      <div class="service-item">
+        <div class="service-item-num">03</div>
+        <div class="service-item-icon">📦</div>
+        <div class="service-item-title">Take Away</div>
+        <div class="service-item-desc">Freshly packed meals ready for quick pickup — perfect for office lunches and family dinners at home.</div>
+        <div class="service-line"></div>
+      </div>
+      <div class="service-item">
+        <div class="service-item-num">04</div>
+        <div class="service-item-icon">🌶</div>
+        <div class="service-item-title">Curry Point</div>
+        <div class="service-item-desc">Daily fresh-made Andhra gravies and curries available for takeaway by the portion or in bulk quantities.</div>
+        <div class="service-line"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VISIT INFO -->
+<div class="info-wrapper" id="visit">
+  <div class="info-inner">
+    <div class="reveal">
+      <div class="section-label">Find Us</div>
+      <h2 class="section-heading">Visit <em>Our Restaurant</em></h2>
+    </div>
+    <div class="info-grid reveal">
+      <div class="info-card info-card-dark">
+        <div class="info-card-icon">📍</div>
+        <div class="info-card-label">Address</div>
+        <div class="info-main">MIG-246, Road No. 4,<br>KPHB Colony</div>
+        <div class="info-sub">Near Remedy Hospital Lane, Kukatpally, Hyderabad, Telangana — 500072</div>
+      </div>
+      <div class="info-card info-card-light">
+        <div class="info-card-icon">🕐</div>
+        <div class="info-card-label">Opening Hours</div>
+        <div class="info-main">Opens 11:30 AM</div>
+        <div class="info-sub">
+          Monday – Saturday<br>11:30 AM – 10:30 PM<br><br>
+          Sunday<br>11:30 AM – 10:00 PM
+        </div>
+      </div>
+      <div class="info-card info-card-accent">
+        <div class="info-card-icon">📞</div>
+        <div class="info-card-label">Contact Us</div>
+        <a href="tel:8374670325" class="info-phone-link" style="color:#fff;">83746 70325</a>
+        <a href="tel:8247827571" class="info-phone-link" style="color:#fff;">82478 27571</a>
+        <div class="info-sub" style="margin-top: 16px;">
+          <a href="https://swiggy.com" style="background:#fff; color:var(--saffron); padding: 10px 20px; border-radius:3px; font-size: 13px; font-weight:700; text-decoration:none; display:inline-block;">Order on Swiggy →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<div class="reviews-wrapper" id="reviews">
+  <div class="reviews-inner">
+    <div class="reveal">
+      <div class="section-label">Customer Love</div>
+      <h2 class="section-heading">What People <em>Say</em></h2>
+    </div>
+    <div class="rating-overview reveal">
+      <div class="rating-big">4.6</div>
+      <div>
+        <div class="rating-stars">★★★★★</div>
+        <div class="rating-count">Based on 4,453 Google reviews</div>
+      </div>
+      <div class="rating-bars">
+        <div class="rating-bar">
+          <span class="rating-bar-label">5★</span>
+          <div class="rating-bar-track"><div class="rating-bar-fill" style="width:78%"></div></div>
+        </div>
+        <div class="rating-bar">
+          <span class="rating-bar-label">4★</span>
+          <div class="rating-bar-track"><div class="rating-bar-fill" style="width:14%"></div></div>
+        </div>
+        <div class="rating-bar">
+          <span class="rating-bar-label">3★</span>
+          <div class="rating-bar-track"><div class="rating-bar-fill" style="width:5%"></div></div>
+        </div>
+        <div class="rating-bar">
+          <span class="rating-bar-label">2★</span>
+          <div class="rating-bar-track"><div class="rating-bar-fill" style="width:2%"></div></div>
+        </div>
+        <div class="rating-bar">
+          <span class="rating-bar-label">1★</span>
+          <div class="rating-bar-track"><div class="rating-bar-fill" style="width:1%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="reviews-grid reveal">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Best Andhra biryani in Kukatpally — period. The spice level is authentic, the portions are generous, and the price is unbeatable. My entire family loves this place."</p>
+        <div class="review-author">
+          <div class="review-avatar">RK</div>
+          <div>
+            <div class="review-name">Ravi Kumar</div>
+            <div class="review-date">Google Review · 2 weeks ago</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The full meals here are absolutely incredible — tastes exactly like home cooking. Dal, sambar, rasam, rice, and the avakaya pickle makes it perfect. Will visit again!"</p>
+        <div class="review-author">
+          <div class="review-avatar">SP</div>
+          <div>
+            <div class="review-name">Sunitha Prasad</div>
+            <div class="review-date">Google Review · 1 month ago</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">"We ordered catering for our office event and the team was highly professional. Food was fresh, delivered on time, and everyone loved the biryani. Highly recommend!"</p>
+        <div class="review-author">
+          <div class="review-avatar">VR</div>
+          <div>
+            <div class="review-name">Venkat Rao</div>
+            <div class="review-date">Google Review · 3 weeks ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-wrapper">
+  <div class="cta-bg"></div>
+  <div class="cta-content reveal">
+    <h2 class="cta-heading">Hungry for<br><em>Real Andhra Food?</em></h2>
+    <p class="cta-sub">Walk in, call us, or order online — a delicious meal is just moments away.</p>
+    <div class="cta-buttons">
+      <a href="tel:8374670325" class="btn-cta-primary">☎ Call: 83746 70325</a>
+      <a href="https://swiggy.com" class="btn-cta-outline">Order on Swiggy →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Teluginti Ruchulu</div>
+      <div class="footer-brand-tel">తెలుగింటి రుచులు</div>
+      <p class="footer-brand-desc">Authentic Andhra cuisine served with love and tradition in the heart of Kukatpally, Hyderabad. Every meal, a taste of home.</p>
+      <div class="footer-contact">
+        <a href="tel:8374670325">📱 83746 70325</a>
+        <a href="tel:8247827571">📱 82478 27571</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#visit">Visit Us</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#">Dine-In</a></li>
+        <li><a href="#">Take Away</a></li>
+        <li><a href="#">Catering</a></li>
+        <li><a href="#">Curry Point</a></li>
+        <li><a href="https://swiggy.com">Order Online</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Location</div>
+      <ul class="footer-links">
+        <li><a href="#">MIG-246, Road No. 4</a></li>
+        <li><a href="#">KPHB Colony</a></li>
+        <li><a href="#">Kukatpally</a></li>
+        <li><a href="#">Hyderabad — 500072</a></li>
+        <li><a href="#">Near Remedy Hospital</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Teluginti Ruchulu. All rights reserved.</span>
+    <span class="footer-made">Crafted with <span>♥</span> for authentic Telugu food lovers</span>
+  </div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX - 6 + 'px';
+  cursor.style.top = e.clientY - 6 + 'px';
+});
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(3)'; cursor.style.opacity = '0.5'; });
+  el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; cursor.style.opacity = '1'; });
+});
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => observer.observe(el));
+
+// Menu filter
+function filterMenu(cat, btn) {
+  document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.menu-item').forEach(item => {
+    if (cat === 'all' || item.dataset.cat === cat) {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+// Smooth nav highlight on scroll
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    if (window.scrollY >= section.offsetTop - 100) current = section.id;
+  });
+  navLinks.forEach(link => {
+    link.style.color = link.getAttribute('href') === '#' + current
+      ? 'var(--gold)' : '';
+  });
+});
+</script>
+</body>
+</html>
